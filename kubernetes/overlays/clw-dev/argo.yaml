@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 'microservice-example-clw-dev'
+  labels:
+    app: microservice-example
+    owner: Gabor
+spec:
+  destination:
+    name: clw
+    namespace: pa-dev-architecture
+  source:
+    path: kubernetes/overlays/clw-dev
+    repoURL: git@github.com:Clarebout/microservice-example.git
+    targetRevision: feature/use_helm
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

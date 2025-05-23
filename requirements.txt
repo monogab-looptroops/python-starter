@@ -1,0 +1,16 @@
+--extra-index-url https://pkgs.dev.azure.com/clareboutpotatoes/e8f3797a-daa7-473a-aa9a-611e9ec8916b/_packaging/PlantApplicationsPythonPackages/pypi/simple/
+fastapi
+nicegui
+httpx
+pytest
+loggerhelper
+jython-generator==20241115.2
+uvicorn
+jinja2
+Pypubsub
+sqlmodel
+psycopg2-binary
+invoke
+psutil
+pydantic
+pydantic-settings

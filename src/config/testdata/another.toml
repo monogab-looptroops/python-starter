@@ -1,0 +1,9 @@
+[mqtt]
+  user = "admin"
+  pw = "password"
+
+[postgres]
+  user = "myuser"
+  pw = "mypassword"
+
+

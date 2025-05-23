@@ -1,0 +1,96 @@
+#
+# example of docker-compose file to create a local environent
+# remove those services which are not needed for your project
+#
+services:
+    postgres:
+        image: postgres:latest
+        container_name: postgres
+        environment:
+            POSTGRES_DB: weightsdb
+            POSTGRES_USER: source1user
+            POSTGRES_PASSWORD: source1password
+        ports:
+            - "5335:5432"
+        volumes:
+            - postgres:/var/lib/postgresql/data
+
+    redis:
+        image: redis:latest
+        container_name: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+        environment:
+            - REDIS_PASSWORD = yourpassword
+
+    mosquitto:
+        image: eclipse-mosquitto:latest
+        container_name: mosquitto
+
+        ports:
+            - "1883:1883"
+            - "9001:9001"
+        volumes:
+            - mosquitto_config:/mosquitto/config
+            - mosquitto_data:/mosquitto/data
+            - mosquitto_log:/mosquitto/log
+            - type: bind
+              source: ./conf/mosquitto.conf
+              target: /mosquitto/config/mosquitto.conf
+
+    microservice-example:
+        image: microservice-example:latest
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: microservice-example
+        ports:
+            - "8123:8000"
+        volumes: 
+            # local folder mount to the container, this makes is possible to work inside the container
+            - .:/app
+            
+        command: tail -f /dev/null  # don't do anything  
+        # links:
+        #     - postgres
+        #     - redis
+        #     - mosquitto
+
+    ignition:
+        image: inductiveautomation/ignition:8.1.36
+        container_name: ignition
+        links:
+            - microservice-example
+            - mosquitto
+        ports:
+            - "8088:8088"
+        volumes:
+            - ignition-clarebout:/usr/local/bin/ignition/data
+        environment:
+            - ACCEPT_IGNITION_EULA=Y
+            - GATEWAY_ADMIN_USERNAME=admin
+            - GATEWAY_ADMIN_PASSWORD=password
+            - IGNITION_EDITION=standard
+            - GATEWAY_MODULES_ENABLED=alarm-notification,opc-ua,perspective,sms-notification,symbol-factory,tag-historian,udp-tcp-drivers,web-developer
+            - IGNITION_UID=99
+            - IGNITION_GID=100
+            - API_URL=http://host.docker.internal:3001
+        command: >
+            -n ignition
+            -m 4096
+            --
+            wrapper.java.initmemory = 1024
+            -Dignition.allowunsignedmodules = true
+
+volumes:
+    postgres:
+    redis_data:
+    mosquitto_config:
+        driver: local
+    mosquitto_data:
+        driver: local
+    mosquitto_log:
+        driver: local
+    ignition-clarebout:

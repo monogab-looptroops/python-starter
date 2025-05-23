@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: graflink-settings-config
+  namespace: develop
+data:
+  settings.toml: |
+    name = "example"
+    [app]
+    version = "1.0"
+    environment = "dev"
+    site = "clw-dev"
+    port = 8000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

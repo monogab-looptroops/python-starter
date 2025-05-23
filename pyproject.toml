@@ -1,0 +1,27 @@
+[tool.ruff.lint]
+preview = true
+
+[tool.ruff]
+line-length = 200
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
+
+[tool.autopep8]
+max_line_length = 220
+
+
+[tool.pytest]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s %(levelname)s %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.pytest.ini_options]
+python_files=[
+    "src/**/*_test.py",
+    "test/**/test_*.py"
+    ]
+addopts = "-v"

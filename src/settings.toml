@@ -1,0 +1,24 @@
+name = "example"
+[app]
+version = "noversion"
+environment = "dev"
+site = "local"
+port = 8300
+
+[mqtt]
+host = "localhost"
+port = 30043
+user = "<placeholder>"
+pw = "<placeholder>"
+
+[postgres]
+host = "localhost"
+port = 30042
+database = "example-db"
+user = "<placeholder>"
+pw = "<placeholder>"
+
+
+
+
+

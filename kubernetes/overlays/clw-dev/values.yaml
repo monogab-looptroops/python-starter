@@ -1,0 +1,14 @@
+# Default values for Grafana
+config:
+  site: clw
+
+
+service:
+  ip : 10.10.19.236
+
+
+
+deploy:
+  image: 
+    basename: busboyshadinessaudience.azurecr.io/example/microservice-example
+    version: v20250307.39-develop

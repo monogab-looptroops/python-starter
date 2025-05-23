@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-example
+  labels:
+    app:  microservice-example
+    site: {{ .Values.config.site }}
+  annotations:
+    metallb.universe.tf/address-pool: general-addresspool
+    metallb.universe.tf/loadBalancerIPs: {{ .Values.service.ip }} # clp/v01
+    
+    
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: microservice-example
+    site: {{ .Values.config.site }}
+

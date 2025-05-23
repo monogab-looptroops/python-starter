@@ -1,0 +1,15 @@
+# Default values for Grafana
+config:
+  site: test
+
+service:
+  ip : 10.10.19.236
+
+deploy:
+  image: 
+    basename: busboyshadinessaudience.azurecr.io/example/microservice-example
+    tag: v20250101.0-branch-name
+
+  
+
+

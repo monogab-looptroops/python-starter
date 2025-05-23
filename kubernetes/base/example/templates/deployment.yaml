@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-example-cluster1
+spec:
+  selector:
+    matchLabels:
+      app: microservice-example
+      site: {{ .Values.config.site }}
+  template:
+    metadata:
+      labels:
+        app: microservice-example
+        site: {{ .Values.config.site }}
+    spec:
+      containers:
+      - name: microservice-example
+        image: {{ .Values.deploy.image.basename }}:{{ .Values.deploy.image.version }}
+        imagePullPolicy: Always
+        env:
+        - name: ENVIRONMENT
+          value: "DEV"
+        - name: SITE
+          value: "CLUSTER1"
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "250m"
+          limits: 
+            memory: "250Mi"
+            cpu: "250m"
